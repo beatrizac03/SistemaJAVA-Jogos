@@ -1,13 +1,18 @@
 package PainelAdmin;
 
+import componentsAdmin.ContentPanelAdmin;
+import componentsAdmin.SidebarAdmin;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
 public class PainelAdmin extends JFrame {
-    String fontPath = "src/fonts/Poppins-Medium.ttf";
-    private JPanel panel = new JPanel();
+    String fontPath = "src/fonts/Inter-SemiBold.ttf";
+    private JPanel mainPanel = new JPanel(new BorderLayout());
+    private JPanel sidebar = new JPanel();
+    private JPanel contentPanel = new JPanel();
 
     public PainelAdmin() {
         this.setSize(900, 600);
@@ -19,30 +24,35 @@ public class PainelAdmin extends JFrame {
     }
 
     public void configurePanels() {
-        panel.setSize(500, 500);
+        mainPanel.setSize(500, 500);
+//
+//        JLabel label = new JLabel("NOME");
 
-        JLabel label = new JLabel("NOME");
+        configureSidebarAndContentPanel();
 
-        configureSidebarAndMainPanel();
-
-        panel.add(label);
-        this.add(panel);
+//        mainPanel.add(label);
+        this.add(mainPanel);
     }
 
-    public void configureSidebarAndMainPanel() {
-        JPanel sidebar = new JPanel();
+    public void configureSidebarAndContentPanel() {
         sidebar.setBackground(Color.lightGray);
+        sidebar.setPreferredSize(new Dimension(200, this.getHeight()));
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setBackground(Color.YELLOW);
+        contentPanel.setBackground(Color.YELLOW);
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, sidebar, mainPanel);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, sidebar, contentPanel);
         splitPane.setDividerLocation(200);
 
-        panel.add(sidebar);
-        panel.add(mainPanel);
+        mainPanel.add(sidebar,BorderLayout.WEST);
+        mainPanel.add(contentPanel, BorderLayout.CENTER);
         this.add(splitPane);
+
+        SidebarAdmin.configureSidebar(this);
+        ContentPanelAdmin.configureContentPanel(this);
     }
+
+    public JPanel getSidebar() { return sidebar; }
+    public JPanel getContentPanel() { return contentPanel; }
 
     public void manageFont() {
         try {
