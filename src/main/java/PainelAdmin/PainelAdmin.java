@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class PainelAdmin extends JFrame {
     String fontPath = "src/fonts/Inter-SemiBold.ttf";
+    private Font fontInterRegular;
     private JPanel mainPanel = new JPanel(new BorderLayout());
     private JPanel sidebar = new JPanel();
     private JPanel contentPanel = new JPanel();
@@ -54,6 +55,14 @@ public class PainelAdmin extends JFrame {
     public JPanel getSidebar() { return sidebar; }
     public JPanel getContentPanel() { return contentPanel; }
 
+    public void showCadastrarJogosPanel() {
+        ContentPanelAdmin.showPanel("cadastrarJogos");
+    }
+
+    public void showJogosCadastradosPanel() {
+        ContentPanelAdmin.showPanel("jogosCadastrados");
+    }
+
     public void manageFont() {
         try {
             Font fontInterRegular = Font.createFont(Font.TRUETYPE_FONT, new File(fontPath)).deriveFont(12f);
@@ -69,6 +78,8 @@ public class PainelAdmin extends JFrame {
             exibirMensagemErro("A tipografia está corrompida ou inválida.");
         }
     }
+
+
 
     private void exibirMensagemErro(String message){
         JOptionPane.showMessageDialog(null, message, "ERRO", JOptionPane.ERROR_MESSAGE);

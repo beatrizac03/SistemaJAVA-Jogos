@@ -25,11 +25,19 @@ public class SidebarAdmin extends JFrame {
         label1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Deu erro", "erro", JOptionPane.INFORMATION_MESSAGE);
+                admin.showCadastrarJogosPanel();
+
             }
         });
 
         JLabel label2 = new JLabel("JOGOS CADASTRADOS");
+        label2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        label2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                admin.showJogosCadastradosPanel();
+            }
+        });
 
         label1.setForeground(Color.WHITE);
         label2.setForeground(Color.WHITE);
