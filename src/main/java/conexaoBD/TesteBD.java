@@ -19,7 +19,7 @@ public class TesteBD {
     }
 
     public static void cadastrarJogo(Jogo jogo) {
-        String insertJogo = "INSERT INTO jogo(id_jogo, titulo_jogo, genero_jogo, preco_jogo, descricao_jogo, imagem_jogo)" +
+        String insertJogo = "INSERT INTO jogos(id_jogo, titulo_jogo, genero_jogo, preco_jogo, descricao_jogo, imagem_jogo)" +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = getConnection(); PreparedStatement stm = conn.prepareStatement(insertJogo)) {
