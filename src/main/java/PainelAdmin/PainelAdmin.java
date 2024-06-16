@@ -5,21 +5,18 @@ import componentsAdmin.SidebarAdmin;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 public class PainelAdmin extends JFrame {
-    String fontPath = "src/fonts/Inter-SemiBold.ttf";
-    private Font fontInterRegular;
     private JPanel mainPanel = new JPanel(new BorderLayout());
     private JPanel sidebar = new JPanel();
     private JPanel contentPanel = new JPanel();
 
     public PainelAdmin() {
+        this.setTitle("GameHUB");
         this.setSize(900, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        manageFont();
+        FontManager.manageFont();
         configurePanels();
         this.setVisible(true);
     }
@@ -48,6 +45,11 @@ public class PainelAdmin extends JFrame {
         mainPanel.add(contentPanel, BorderLayout.CENTER);
         this.add(splitPane);
 
+//        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sidebar, contentPanel);
+//        splitPane.setDividerLocation(200);
+//
+//        mainPanel.add(splitPane, BorderLayout.CENTER);
+
         SidebarAdmin.configureSidebar(this);
         ContentPanelAdmin.configureContentPanel(this);
     }
@@ -61,28 +63,6 @@ public class PainelAdmin extends JFrame {
 
     public void showJogosCadastradosPanel() {
         ContentPanelAdmin.showPanel("jogosCadastrados");
-    }
-
-    public void manageFont() {
-        try {
-            Font fontInterRegular = Font.createFont(Font.TRUETYPE_FONT, new File(fontPath)).deriveFont(12f);
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(fontInterRegular);
-
-            UIManager.put("Label.font", fontInterRegular);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            exibirMensagemErro("Erro ao carregar a fonte. Verifique o caminho do arquivo.");
-        } catch (FontFormatException e) {
-            exibirMensagemErro("A tipografia está corrompida ou inválida.");
-        }
-    }
-
-
-
-    private void exibirMensagemErro(String message){
-        JOptionPane.showMessageDialog(null, message, "ERRO", JOptionPane.ERROR_MESSAGE);
     }
 
     public static void main(String[] args) {

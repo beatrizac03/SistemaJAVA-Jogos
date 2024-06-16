@@ -18,8 +18,7 @@ public class SidebarAdmin extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.insets = new Insets(150, 0, 50, 0);
-
+        gbc.insets = new Insets(0, 0, 20, 0);
         JLabel label1 = new JLabel("CADASTRAR JOGOS");
         label1.setCursor(new Cursor(Cursor.HAND_CURSOR));
         label1.addMouseListener(new MouseAdapter() {
