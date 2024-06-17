@@ -17,10 +17,13 @@ public class SidebarAdmin extends JFrame {
         sidebar.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.gridy = 0;
+
         gbc.insets = new Insets(0, 0, 20, 0);
         JLabel label1 = new JLabel("CADASTRAR JOGOS");
+        label1.setForeground(Color.WHITE);
         label1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        sidebar.add(label1, gbc);
         label1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -29,8 +32,12 @@ public class SidebarAdmin extends JFrame {
             }
         });
 
+        gbc.gridy = 1;
+        gbc.insets = new Insets(0, 0, 100, 0);
         JLabel label2 = new JLabel("JOGOS CADASTRADOS");
+        label2.setForeground(Color.WHITE);
         label2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        sidebar.add(label2, gbc);
         label2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -38,10 +45,10 @@ public class SidebarAdmin extends JFrame {
             }
         });
 
-        label1.setForeground(Color.WHITE);
-        label2.setForeground(Color.WHITE);
-
-        sidebar.add(label1, gbc);
-        sidebar.add(label2, gbc);
+        gbc.gridy = 5;
+        gbc.insets = new Insets(70, 0, 0, 20);
+        JLabel label3 = new JLabel("Sair");
+        label3.setForeground(Color.RED);
+        sidebar.add(label3, gbc);
     }
 }

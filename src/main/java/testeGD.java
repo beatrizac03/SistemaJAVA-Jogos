@@ -21,7 +21,7 @@ public class testeGD extends JFrame {
         main.setBorder(new LineBorder(Color.red));
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
 
         gbc.gridx = 0;  // define a coluna
         gbc.gridy = 0;  // define a linha

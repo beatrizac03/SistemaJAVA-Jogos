@@ -4,6 +4,8 @@ import java.sql.*;
 
 import classesObjetos.Jogo;
 
+import javax.swing.*;
+
 public class TesteBD {
     private static String URL = "jdbc:sqlite:src/main/resources/testando.bd";
     private static String usuario = "root";
@@ -33,9 +35,8 @@ public class TesteBD {
             System.out.println("Jogo " + jogo.getTitulo() + " adicionado ao banco de dados.");
         } catch (SQLException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro de conexão ao BD", "ERRO SQL", JOptionPane.ERROR_MESSAGE);
         }
-
-
     }
     public static void main(String[] args) {
         getConnection();

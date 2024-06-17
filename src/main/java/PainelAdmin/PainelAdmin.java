@@ -1,10 +1,12 @@
 package PainelAdmin;
 
+import classesObjetos.Jogo;
 import componentsAdmin.ContentPanelAdmin;
 import componentsAdmin.SidebarAdmin;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class PainelAdmin extends JFrame {
     private JPanel mainPanel = new JPanel(new BorderLayout());
@@ -13,9 +15,10 @@ public class PainelAdmin extends JFrame {
 
     public PainelAdmin() {
         this.setTitle("GameHUB");
-        this.setSize(900, 600);
+        this.setSize(1000, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         FontManager.manageFont();
         configurePanels();
         this.setVisible(true);
