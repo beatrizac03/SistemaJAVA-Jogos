@@ -18,7 +18,6 @@ public class PainelAdmin extends JFrame {
         this.setSize(1000, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
         FontManager.manageFont();
         configurePanels();
         this.setVisible(true);

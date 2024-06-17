@@ -24,11 +24,11 @@ public class Jogo {
         this.descricao = descricao;
     }
 
-    public String getImagem() {
+    public byte[] getImagem() {
         return imagem;
     }
 
-    public void setImagem(String imagem) {
+    public void setImagem(byte[] imagem) {
         this.imagem = imagem;
     }
 
@@ -48,11 +48,13 @@ public class Jogo {
         this.idJogo = idJogo;
     }
 
-    private String titulo, genero, descricao, imagem;
+    private String titulo, genero, descricao;
+
     private double preco;
     private int idJogo;
+    private byte[] imagem;
 
-    public Jogo(int idJogo, String titulo, String genero, double preco, String descricao, String imagem) {
+    public Jogo(int idJogo, String titulo, String genero, double preco, String descricao, byte[] imagem) {
         this.titulo = titulo;
         this.genero = genero;
         this.descricao = descricao;

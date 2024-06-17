@@ -5,11 +5,13 @@ import PainelAdmin.PainelAdmin;
 import classesObjetos.Jogo;
 import conexaoBD.TesteBD;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
@@ -27,7 +29,6 @@ public class ContentPanelAdmin extends JFrame {
     static JTextArea inputDescricao = new JTextArea(3, 20);
     static JTextField inputImagem = new JTextField(40);
     static JLabel labelImagem = new JLabel();
-    static File imagemSelecionada;
     static JButton buttonUploadImagem = new JButton("SELECIONAR IMAGEM");
 
 
@@ -125,6 +126,44 @@ public class ContentPanelAdmin extends JFrame {
         gbc.gridx = 0;
         gbc.gridy++;
         cadastrarJogosPanel.add(buttonCadastrar, gbc);
+
+        // segunda coluna (upload de imagem)
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.NONE;
+        labelImagem.setPreferredSize(new Dimension(50, 100));
+        labelImagem.setOpaque(true);
+        gbc.insets = new Insets(0, 40, 10, 20);
+        JLabel labelImage = new JLabel();
+        labelImage.setBorder(new LineBorder(Color.green));
+        cadastrarJogosPanel.add(labelImage, gbc);
+
+        gbc.gridy++;
+        gbc.insets = new Insets(0, 20, 10, 20);
+        cadastrarJogosPanel.add(inputImagem, gbc);
+
+        gbc.gridy++;
+        cadastrarJogosPanel.add(buttonUploadImagem, gbc);
+        buttonUploadImagem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser chooser = new JFileChooser();
+                chooser.showOpenDialog(null);
+                File f = chooser.getSelectedFile();
+                String pathImage = f.getAbsolutePath();
+                try {
+                    BufferedImage bi = ImageIO.read(new File(pathImage));
+                    Image imgRedimensionada = bi.getScaledInstance(50, 100, Image.SCALE_SMOOTH);
+                    ImageIcon icon = new ImageIcon(imgRedimensionada);
+                    labelImage.setIcon(icon);
+                    TesteBD.path2 = pathImage;
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
         buttonCadastrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -136,196 +175,6 @@ public class ContentPanelAdmin extends JFrame {
                 }
             }
         });
-
-        // segunda coluna (upload de imagem)
-        gbc.gridx = 2;
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
-        gbc.insets = new Insets(0, 40, 10, 20);
-        cadastrarJogosPanel.add(new JLabel("IMAGEM:"), gbc);
-
-        gbc.gridy++;
-        gbc.insets = new Insets(0, 20, 10, 20);
-        cadastrarJogosPanel.add(inputImagem, gbc);
-
-        gbc.gridy++;
-        cadastrarJogosPanel.add(buttonUploadImagem, gbc);
-        buttonUploadImagem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                int returnValue = fileChooser.showOpenDialog(null);
-                if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    imagemSelecionada = fileChooser.getSelectedFile();
-                    inputImagem.setText(imagemSelecionada.getAbsolutePath());
-                    ImageIcon icon = new ImageIcon(imagemSelecionada.getAbsolutePath());
-                    Image image = icon.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH);
-                    labelImagem.setIcon(new ImageIcon(image));
-                }
-            }
-        });
-
-        gbc.gridy++;
-        gbc.fill = GridBagConstraints.NONE;
-        labelImagem.setPreferredSize(new Dimension(200, 150));
-        labelImagem.setBorder(new LineBorder(Color.green));
-        labelImagem.setOpaque(true);
-        labelImagem.setBackground(Color.gray);
-        cadastrarJogosPanel.add(labelImagem, gbc);
-
-
-//        // LABEL E INPUT IMAGEM
-//
-//        gbc.gridy = 0;
-//        gbc.gridx = 15;
-//        gbc.insets = new Insets(0, 0, 5, 0);
-//        labelImagem.setPreferredSize(new Dimension(50, 200));
-//        labelImagem.setBorder(new LineBorder(Color.green));
-//        labelImagem.setOpaque(true);
-//        labelImagem.setBackground(Color.gray);
-//        cadastrarJogosPanel.add(labelImagem, gbc);
-//
-//        gbc.gridy++;
-//        gbc.gridx = 15;
-//        gbc.insets = new Insets(0, 0, 20, 0);
-//        cadastrarJogosPanel.add(inputImagem, gbc);
-//
-//        gbc.gridy++;
-//        gbc.gridx = 15;
-//        cadastrarJogosPanel.add(buttonUploadImagem, gbc);
-//        buttonUploadImagem.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                JFileChooser fileChooser = new JFileChooser();
-//                int returnValue = fileChooser.showOpenDialog(null);
-//                if (returnValue == JFileChooser.APPROVE_OPTION) {
-//                    imagemSelecionada = fileChooser.getSelectedFile();
-//                    inputImagem.setText(imagemSelecionada.getAbsolutePath());
-//                    ImageIcon icon = new ImageIcon(imagemSelecionada.getAbsolutePath());
-//                    Image image = icon.getImage().getScaledInstance(labelImagem.getWidth(), labelImagem.getHeight(), Image.SCALE_SMOOTH);
-//                    labelImagem.setIcon(new ImageIcon(image));
-//                }
-//            }
-//        });
-
-
-
-//        gbc.fill = GridBagConstraints.HORIZONTAL;
-//        gbc.anchor = GridBagConstraints.NORTHWEST;
-//        gbc.weightx = 1;
-//
-//        gbc.gridx = 0;   // define a coluna
-//        gbc.gridy = 0;   // define a linha
-//        gbc.gridwidth = 2;   // define quantas colunas o componente vai ocupar
-//        gbc.insets = new Insets(10, 10, 40, 10);
-//        cadastrarJogosPanel.add(new JLabel("CADASTRO DE JOGOS"), gbc);
-//
-//        // label IDJogo
-//        gbc.gridy = 1;
-//        JLabel labelIDJogo = new JLabel("ID JOGO: ");
-//        gbc.insets = new Insets(0, 0, 5, 0);
-//        cadastrarJogosPanel.add(labelIDJogo, gbc);
-//
-//        // input IDJogo
-//        gbc.gridy++;
-//        gbc.insets = new Insets(0, 0, 20, 0);
-//        cadastrarJogosPanel.add(inputIDJogo, gbc);
-//
-//        // Label "Título"
-//        gbc.gridy++;
-//        JLabel labelTitulo = new JLabel("TÍTULO:");
-//        gbc.insets = new Insets(0, 0, 5, 0);
-//        cadastrarJogosPanel.add(labelTitulo, gbc);
-//
-//        // Input "Título"
-//        gbc.gridy++;
-//        gbc.insets = new Insets(0, 0, 20, 0);
-//        cadastrarJogosPanel.add(inputTitulo, gbc);
-//
-//        // Label "Desenvolvedores"
-//        gbc.gridy++;
-//        gbc.insets = new Insets(0, 0, 5, 0);
-//        cadastrarJogosPanel.add(new JLabel("GÊNERO:"), gbc);
-//
-//        // Input "Desenvolvedores"
-//        gbc.gridy++;
-//        gbc.insets = new Insets(0, 0, 20, 0);
-//        cadastrarJogosPanel.add(inputGenero, gbc);
-//
-//        // Label "Preço"
-//        gbc.gridy++;
-//        gbc.insets = new Insets(0, 0, 5, 0);
-//        cadastrarJogosPanel.add(new JLabel("PREÇO:"), gbc);
-//
-//        // Input "Preço"
-//        gbc.gridy++;
-//        gbc.insets = new Insets(0, 0, 20, 0);
-//        cadastrarJogosPanel.add(inputPreco, gbc);
-//
-//        // Label "Descrição"
-//        gbc.gridy++;
-//        gbc.insets = new Insets(0, 0, 5, 0);
-//        cadastrarJogosPanel.add(new JLabel("DESCRIÇÃO:"), gbc);
-//
-//        // Input "Descrição"
-//        gbc.gridy++;
-//        inputDescricao.setLineWrap(true);
-//        inputDescricao.setWrapStyleWord(true);
-//        gbc.insets = new Insets(0, 0, 20, 0);
-//        gbc.fill = GridBagConstraints.BOTH;  // Preenche o espaço vertical e horizontal
-//        cadastrarJogosPanel.add(new JScrollPane(inputDescricao), gbc);
-//
-//        // Label "Imagem"
-//        gbc.gridy = 0;
-//        gbc.gridx = 15;
-//        gbc.insets = new Insets(0, 0, 5, 0);
-//        labelImagem.setPreferredSize(new Dimension(50, 200));
-//        labelImagem.setBorder(new LineBorder(Color.green));
-//        labelImagem.setOpaque(true);
-//        labelImagem.setBackground(Color.gray);
-//        cadastrarJogosPanel.add(labelImagem, gbc);
-//
-//        gbc.gridx = 0;
-//
-//        // Input "Imagem"
-//        gbc.gridy++;
-//        gbc.gridx = 15;
-//        gbc.insets = new Insets(0, 0, 20, 0);
-//        cadastrarJogosPanel.add(inputImagem, gbc);
-//
-//        gbc.gridy++;
-//        gbc.gridx = 15;
-//        cadastrarJogosPanel.add(buttonUploadImagem, gbc);
-//        buttonUploadImagem.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                JFileChooser fileChooser = new JFileChooser();
-//                int returnValue = fileChooser.showOpenDialog(null);
-//                if (returnValue == JFileChooser.APPROVE_OPTION) {
-//                    imagemSelecionada = fileChooser.getSelectedFile();
-//                    inputImagem.setText(imagemSelecionada.getAbsolutePath());
-//                    ImageIcon icon = new ImageIcon(imagemSelecionada.getAbsolutePath());
-//                    Image image = icon.getImage().getScaledInstance(labelImagem.getWidth(), labelImagem.getHeight(), Image.SCALE_SMOOTH);
-//                    labelImagem.setIcon(new ImageIcon(image));
-//                }
-//            }
-//        });
-//
-//        gbc.gridx = 0;
-//
-//        buttonCadastrar.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                    cadastrarJogo();
-//                } catch (IOException | SQLException ex) {
-//                    ex.printStackTrace();
-//                    JOptionPane.showMessageDialog(null, "Erro ao cadastrar o jogo: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-//                }
-//            }
-//        });
-//        gbc.gridy++;
-//        cadastrarJogosPanel.add(buttonCadastrar, gbc);
     }
 
     public static void cadastrarJogo() throws IOException, SQLException {
@@ -334,7 +183,7 @@ public class ContentPanelAdmin extends JFrame {
         String genero = inputGenero.getText();
         double preco = Double.parseDouble(inputPreco.getText());
         String descricao = inputDescricao.getText();
-        String imagem = inputImagem.getText();
+        byte[] imagem = inputImagem.getText().getBytes();
 
         Jogo jogo = new Jogo(idJogo, titulo, genero, preco, descricao, imagem);
         TesteBD.cadastrarJogo(jogo);
