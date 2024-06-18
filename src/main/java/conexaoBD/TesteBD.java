@@ -15,8 +15,7 @@ public class TesteBD {
     private static String URL = "jdbc:sqlite:src/main/resources/testando.bd";
     private static String usuario = "root";
     private static String senha = "";
-    public static String path2 = null;
-    static FileInputStream inputStream;   // instanciar objeto para fluxo de bytes("obter arquivos")
+
 
     public static Connection getConnection() {
         try {
@@ -37,16 +36,14 @@ public class TesteBD {
             stm.setString(3, jogo.getGenero());
             stm.setDouble(4, jogo.getPreco());
             stm.setString(5, jogo.getDescricao());
-            inputStream = path2;
-//            stm.setBytes(6, jogo.getImagem());
-            stm.setBlob(6, inputStream);
+            stm.setBytes(6, jogo.getImagem());
+
             stm.executeUpdate();
             System.out.println("Jogo " + jogo.getTitulo() + " adicionado ao banco de dados.");
         } catch (SQLException e) {
             e.printStackTrace();
+            e.getMessage();
             JOptionPane.showMessageDialog(null, "Erro de conexão ao BD", "ERRO SQL", JOptionPane.ERROR_MESSAGE);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         }
     }
     public static void main(String[] args) {
