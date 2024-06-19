@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.*;
 
 import classesObjetos.Jogo;
 import componentsAdmin.ContentPanelAdmin;
@@ -45,6 +46,34 @@ public class TesteBD {
             e.getMessage();
             JOptionPane.showMessageDialog(null, "Erro de conexão ao BD", "ERRO SQL", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    // método para obter jogos do BD
+    public static List<Jogo> getJogosCadastrados() {
+        List<Jogo> jogos = new ArrayList<>();
+        String selectQuery = "SELECT genero_jogo, titulo_jogo FROM jogos";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stm = conn.prepareStatement(selectQuery);
+             ResultSet rs = stm.executeQuery()) {
+
+            while(rs.next()) {
+                String titulo = rs.getString("titulo_jogo");
+                String genero = rs.getString("genero_jogo");
+                Jogo jogo = new Jogo(genero, titulo); // Supondo que o construtor de Jogo aceite genero e titulo
+                jogos.add(jogo);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Jogos recuperados do banco de dados: " + jogos.size());
+        for (Jogo jogo : jogos) {
+            System.out.println("Gen: " + jogo.getGenero() + ", Título: " + jogo.getTitulo());
+        }
+
+        return jogos;
     }
     public static void main(String[] args) {
         getConnection();

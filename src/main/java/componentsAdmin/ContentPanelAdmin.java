@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContentPanelAdmin extends JFrame {
     static JPanel contPanel = new JPanel(new CardLayout());
@@ -52,7 +55,7 @@ public class ContentPanelAdmin extends JFrame {
         contPanel.add(jogosCadastradosPanel, "jogosCadastrados");
 
         panelCadastrarJogos(admin);
-//        panelJogosCadastrados();
+        panelJogosCadastrados(admin);
 
 //        showPanel("inicial");
     }
@@ -67,18 +70,18 @@ public class ContentPanelAdmin extends JFrame {
 
         // label e input IDJogo
         JLabel labelIDJogo = new JLabel("ID: ");
-        labelIDJogo.setBounds(50, 60, 100, 20);
+        labelIDJogo.setBounds(50, 60, 100, 20);   // 15 de espaço entre id e input
         cadastrarJogosPanel.add(labelIDJogo);
 
-        inputIDJogo.setBounds(50, 90, 70, 20);
+        inputIDJogo.setBounds(50, 85, 70, 25);
         cadastrarJogosPanel.add(inputIDJogo);
 
-        // label e input Preço
-        JLabel labelPreco = new JLabel("PREÇO (DECIMAL SEPARADO POR .): ");
+        // label e input Preço                     //  20 de espaço entre o ultimo id e outro label
+        JLabel labelPreco = new JLabel("PREÇO: ");
         labelPreco.setBounds(50, 130, 280, 20);
         cadastrarJogosPanel.add(labelPreco);
 
-        inputPreco.setBounds(50, 160, 100, 20);
+        inputPreco.setBounds(50, 165, 100, 25);
         cadastrarJogosPanel.add(inputPreco);
 
         // label e input Titulo
@@ -86,25 +89,25 @@ public class ContentPanelAdmin extends JFrame {
         labelTitulo.setBounds(50, 210, 100, 20);
         cadastrarJogosPanel.add(labelTitulo);
 
-        inputTitulo.setBounds(50, 240, 280, 20);
+        inputTitulo.setBounds(50, 245, 280, 25);
         cadastrarJogosPanel.add(inputTitulo);
 
         // label e input Genero
         JLabel labelGenero = new JLabel("GÊNERO: ");
-        labelGenero.setBounds(50, 260, 100, 20);
+        labelGenero.setBounds(50, 290, 100, 20);
         cadastrarJogosPanel.add(labelGenero);
 
-        inputGenero.setBounds(50, 290, 280, 20);
+        inputGenero.setBounds(50, 325, 280, 25);
         cadastrarJogosPanel.add(inputGenero);
 
         // label e input Descricao
         JLabel labelDescricao = new JLabel("DESCRIÇÃO: ");
-        labelDescricao.setBounds(50, 330, 100, 20);
+        labelDescricao.setBounds(50, 370, 100, 20);
         cadastrarJogosPanel.add(labelDescricao);
 
         JScrollPane scrollPaneDescricao = new JScrollPane(inputDescricao);
         inputDescricao.setLineWrap(true);
-        scrollPaneDescricao.setBounds(50, 360, 280, 100);
+        scrollPaneDescricao.setBounds(50, 385, 280, 100);
         cadastrarJogosPanel.add(scrollPaneDescricao);
 
         // LABEL, BOTAO DE SELECIONAR IMAGEM
@@ -123,7 +126,7 @@ public class ContentPanelAdmin extends JFrame {
         });
 
         // botao cadastrar
-        buttonCadastrar.setBounds(250, 500, 150, 35);
+        buttonCadastrar.setBounds(520, 500, 180, 35);
         cadastrarJogosPanel.add(buttonCadastrar);
 
         buttonCadastrar.addActionListener(new ActionListener() {
@@ -286,6 +289,7 @@ public class ContentPanelAdmin extends JFrame {
         }
     }
 
+    static ArrayList<Jogo> arrJogos = new ArrayList<>();
     public static void cadastrarJogoBtn() throws IOException, SQLException {
         int idJogo = Integer.parseInt(inputIDJogo.getText());
         String titulo = inputTitulo.getText();
@@ -294,13 +298,70 @@ public class ContentPanelAdmin extends JFrame {
         String descricao = inputDescricao.getText();
 
         Jogo jogo = new Jogo(idJogo, titulo, genero, preco, descricao, imagemBytes);
-        TesteBD.cadastrarJogo(jogo);
+        arrJogos.add(jogo);
+        System.out.println(arrJogos);
+        try {
+            TesteBD.cadastrarJogo(jogo);
+            JOptionPane.showMessageDialog(null, "SUCESSO", "CADASTRO REALIZADO!", JOptionPane.PLAIN_MESSAGE);
+        } catch (Exception e) {
+            e.getMessage();
+            JOptionPane.showMessageDialog(null, "ERRO", "ERRO: " + e.getMessage(), JOptionPane.ERROR_MESSAGE);
+        }
+
+        cleanInputs();
     }
 
-//    public static void panelJogosCadastrados() {
-//        jogosCadastradosPanel.setBackground(Color.WHITE);
-//        jogosCadastradosPanel.add(new JLabel("CADASTRADOS"));
-//    }
+    public static  void cleanInputs() {
+        inputIDJogo.setText("");
+        inputPreco.setText("");
+        inputTitulo.setText("");
+        inputGenero.setText("");
+        inputDescricao.setText("");
+        labelImagem.setIcon(null);
+    }
+
+
+    static JTable tabelaJogos;
+    static DefaultTableModel modeloTabela;
+    public static void panelJogosCadastrados(PainelAdmin admin) {
+        jogosCadastradosPanel.setBackground(Color.WHITE);
+        jogosCadastradosPanel.setLayout(null);
+
+        JLabel label1 = new JLabel("JOGOS CADASTRADOS");
+        label1.setBounds(50, 20, 200, 20);
+        jogosCadastradosPanel.add(label1);
+
+        String[] colunas = {"Genero", "Título"};
+        modeloTabela = new DefaultTableModel(colunas, 0);
+        tabelaJogos = new JTable(modeloTabela);
+
+        JScrollPane scrollPane = new JScrollPane(tabelaJogos);
+        scrollPane.setBounds(20, 60, 600, 400);
+        jogosCadastradosPanel.add(scrollPane);
+
+        JButton buttonDisplay = new JButton("MOSTRAR");
+        buttonDisplay.setBounds(200, 20, 100, 20 );
+        jogosCadastradosPanel.add(buttonDisplay);
+        buttonDisplay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carregarDadosDB();
+            }
+        });
+
+    }
+
+    public static void carregarDadosDB() {
+        DefaultTableModel model = (DefaultTableModel) tabelaJogos.getModel();
+        TesteBD teste = new TesteBD();
+
+        for(Jogo j: teste.getJogosCadastrados()) {
+            model.addRow(new Object[]{
+                    j.getGenero(),
+                    j.getTitulo()
+            });
+        }
+    }
 
     public static void showPanel(String panelName) {
         CardLayout cl = (CardLayout) (contPanel.getLayout());
