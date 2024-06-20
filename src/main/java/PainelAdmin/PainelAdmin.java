@@ -1,15 +1,11 @@
 package PainelAdmin;
 
-import classesObjetos.Jogo;
-import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import componentsAdmin.ContentPanelAdmin;
-import componentsAdmin.SidebarAdmin;
+import PainelAdmin.componentsAdmin.ContentPanelAdmin;
+import PainelAdmin.componentsAdmin.SidebarAdmin;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import com.formdev.flatlaf.FlatLightLaf;
 
 public class PainelAdmin extends JFrame {
     private JPanel mainPanel = new JPanel(new BorderLayout());
@@ -23,7 +19,7 @@ public class PainelAdmin extends JFrame {
 //        UIManager.put("TitlePane.background", Color.BLUE);
 //        UIManager.put("TitlePane.foreground", Color.WHITE);
 
-        this.setTitle("GameHUB");
+        this.setTitle("GameHUB - Portal Admin");
         this.setSize(1000, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);

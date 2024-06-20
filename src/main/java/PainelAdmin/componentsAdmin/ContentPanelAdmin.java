@@ -1,4 +1,4 @@
-package componentsAdmin;
+package PainelAdmin.componentsAdmin;
 
 import PainelAdmin.PainelAdmin;
 
@@ -342,12 +342,13 @@ public class ContentPanelAdmin extends JFrame {
         JButton buttonDisplay = new JButton("MOSTRAR");
         buttonDisplay.setBounds(200, 20, 100, 20 );
         jogosCadastradosPanel.add(buttonDisplay);
-        buttonDisplay.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carregarDadosDB();
-            }
-        });
+//        buttonDisplay.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                carregarDadosDB();
+//            }
+//        });
+        carregarDadosDB();
 
     }
 

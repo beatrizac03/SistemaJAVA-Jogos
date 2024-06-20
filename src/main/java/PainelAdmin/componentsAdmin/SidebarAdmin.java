@@ -1,4 +1,4 @@
-package componentsAdmin;
+package PainelAdmin.componentsAdmin;
 
 import PainelAdmin.PainelAdmin;
 

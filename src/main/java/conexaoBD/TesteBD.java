@@ -1,14 +1,9 @@
 package conexaoBD;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
 
 import classesObjetos.Jogo;
-import componentsAdmin.ContentPanelAdmin;
 
 import javax.swing.*;
 
