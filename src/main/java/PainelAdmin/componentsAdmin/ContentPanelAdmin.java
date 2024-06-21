@@ -33,7 +33,6 @@ public class ContentPanelAdmin extends JFrame {
     static JTextField inputGenero = new JTextField(40);
     static JTextField inputPreco = new JTextField(40);
     static JTextArea inputDescricao = new JTextArea(3, 20);
-    static JTextField inputImagem = new JTextField(40);
     static JLabel labelImagem = new JLabel();
     static JButton buttonUploadImagem = new JButton("SELECIONAR IMAGEM");
     public static FileInputStream fis;  // instanciar objeto para o fluxo de bytes
@@ -189,6 +188,7 @@ public class ContentPanelAdmin extends JFrame {
         try {
             TesteBD.cadastrarJogo(jogo);
             JOptionPane.showMessageDialog(null, "SUCESSO", "CADASTRO REALIZADO!", JOptionPane.PLAIN_MESSAGE);
+            carregarDadosDB();
         } catch (Exception e) {
             e.getMessage();
             JOptionPane.showMessageDialog(null, "ERRO", "ERRO: " + e.getMessage(), JOptionPane.ERROR_MESSAGE);
@@ -206,7 +206,6 @@ public class ContentPanelAdmin extends JFrame {
         labelImagem.setIcon(null);
     }
 
-
     static JTable tabelaJogos;
     static DefaultTableModel modeloTabela;
     public static void panelJogosCadastrados(PainelAdmin admin) {
@@ -217,7 +216,7 @@ public class ContentPanelAdmin extends JFrame {
         label1.setBounds(50, 20, 200, 20);
         jogosCadastradosPanel.add(label1);
 
-        String[] colunas = {"Genero", "Título"};
+        String[] colunas = {"ID", "Preço", "Título", "Gênero", "Descrição" };
         modeloTabela = new DefaultTableModel(colunas, 0);
         tabelaJogos = new JTable(modeloTabela);
 
@@ -225,17 +224,7 @@ public class ContentPanelAdmin extends JFrame {
         scrollPane.setBounds(20, 60, 600, 400);
         jogosCadastradosPanel.add(scrollPane);
 
-        JButton buttonDisplay = new JButton("MOSTRAR");
-        buttonDisplay.setBounds(200, 20, 100, 20 );
-        jogosCadastradosPanel.add(buttonDisplay);
-//        buttonDisplay.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                carregarDadosDB();
-//            }
-//        });
         carregarDadosDB();
-
     }
 
     public static void carregarDadosDB() {
@@ -244,8 +233,11 @@ public class ContentPanelAdmin extends JFrame {
 
         for(Jogo j: teste.getJogosCadastrados()) {
             model.addRow(new Object[]{
+                    j.getIdJogo(),
+                    j.getPreco(),
+                    j.getTitulo(),
                     j.getGenero(),
-                    j.getTitulo()
+                    j.getDescricao()
             });
         }
     }

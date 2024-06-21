@@ -52,11 +52,6 @@ public class PainelAdmin extends JFrame {
         mainPanel.add(contentPanel, BorderLayout.CENTER);
         this.add(splitPane);
 
-//        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sidebar, contentPanel);
-//        splitPane.setDividerLocation(200);
-//
-//        mainPanel.add(splitPane, BorderLayout.CENTER);
-
         SidebarAdmin.configureSidebar(this);
         ContentPanelAdmin.configureContentPanel(this);
     }

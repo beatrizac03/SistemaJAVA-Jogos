@@ -47,19 +47,31 @@ public class TesteBD {
         }
     }
 
-    // método para obter jogos do BD
     public static List<Jogo> getJogosCadastrados() {
         List<Jogo> jogos = new ArrayList<>();
-        String selectQuery = "SELECT genero_jogo, titulo_jogo FROM jogos";
+        String selectQuery = "SELECT id_jogo, titulo_jogo, genero_jogo, preco_jogo, descricao_jogo FROM jogos";
 
         try (Connection conn = getConnection();
              PreparedStatement stm = conn.prepareStatement(selectQuery);
              ResultSet rs = stm.executeQuery()) {
 
             while(rs.next()) {
+                int idJogo = rs.getInt("id_jogo");
                 String titulo = rs.getString("titulo_jogo");
                 String genero = rs.getString("genero_jogo");
-                Jogo jogo = new Jogo(genero, titulo); // Supondo que o construtor de Jogo aceite genero e titulo
+                double preco = rs.getDouble("preco_jogo");
+                String descricao = rs.getString("descricao_jogo");
+                byte[] imagem = rs.getBytes("imagem_jogo");
+//                Blob blobimg = (Blob) rs.getBlob("imagem_jogo");
+//                byte[] img = blobimg.getBytes(1, (int) blobimg.length());  // converte os dados binários para arquivo de imagem
+////                BufferedImage imagem = null;
+                try {
+//                    imagem = ImageIO.read(new ByteArrayInputStream(img));
+                } catch(Exception e) {
+                    System.out.println(e);
+                }
+
+                Jogo jogo = new Jogo(idJogo,genero, titulo, preco, descricao, imagem); // Supondo que o construtor de Jogo aceite genero e titulo
                 jogos.add(jogo);
             }
 
@@ -69,49 +81,12 @@ public class TesteBD {
 
         System.out.println("Jogos recuperados do banco de dados: " + jogos.size());
         for (Jogo jogo : jogos) {
-            System.out.println("Gen: " + jogo.getGenero() + ", Título: " + jogo.getTitulo());
+            System.out.println("ID: " + jogo.getIdJogo() + ", Título: " + jogo.getTitulo() + ", Genero: " + jogo.getGenero() +
+                    ", Preço: " + jogo.getPreco() + ", Descrição: " + jogo.getDescricao());
         }
 
         return jogos;
     }
-
-//    public static List<Jogo> getJogosCadastrados() {
-//        List<Jogo> jogos = new ArrayList<>();
-//        String selectQuery = "SELECT id_jogo, titulo_jogo, genero_jogo, preco_jogo, imagem_jogo FROM jogos";
-//
-//        try (Connection conn = getConnection();
-//             PreparedStatement stm = conn.prepareStatement(selectQuery);
-//             ResultSet rs = stm.executeQuery()) {
-//
-//            while(rs.next()) {
-//                int idJogo = rs.getInt("id_jogo");
-//                String titulo = rs.getString("titulo_jogo");
-//                String genero = rs.getString("genero_jogo");
-//                double preco = rs.getDouble("preco_jogo");
-//                Blob blobimg = (Blob) rs.getBlob("imagem_jogo");
-//                byte[] img = blobimg.getBytes(1, (int) blobimg.length());  // converte os dados binários para arquivo de imagem
-//                BufferedImage imagem = null;
-//                try {
-//                    imagem = ImageIO.read(new ByteArrayInputStream(img));
-//                } catch(Exception e) {
-//                    System.out.println(e);
-//                }
-//
-//                Jogo jogo = new Jogo(genero, titulo); // Supondo que o construtor de Jogo aceite genero e titulo
-//                jogos.add(jogo);
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        System.out.println("Jogos recuperados do banco de dados: " + jogos.size());
-//        for (Jogo jogo : jogos) {
-//            System.out.println("Gen: " + jogo.getGenero() + ", Título: " + jogo.getTitulo());
-//        }
-//
-//        return jogos;
-//    }
      public static void main(String[] args) {
         getConnection();
     }

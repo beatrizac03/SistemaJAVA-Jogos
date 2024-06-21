@@ -25,8 +25,11 @@ public class JogosPanel extends JPanel {
 
         for (Jogo jogo : jogos) {
             JPanel card = new JPanel(new BorderLayout());
-            JLabel tituloLabel = new JLabel(jogo.getTitulo());
             JLabel idLabel = new JLabel("ID do Jogo: " + jogo.getGenero());
+            JLabel tituloLabel = new JLabel(jogo.getTitulo());
+            JLabel generoLabel = new JLabel(jogo.getGenero());
+            JLabel descricaoLabel = new JLabel(jogo.getDescricao());
+            JLabel imgLabel = new JLabel(new ImageIcon(jogo.getImagem()));
 
             card.add(tituloLabel, BorderLayout.CENTER);
             card.add(idLabel, BorderLayout.SOUTH);
