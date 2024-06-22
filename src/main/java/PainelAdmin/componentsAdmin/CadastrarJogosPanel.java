@@ -1,15 +1,14 @@
 package PainelAdmin.componentsAdmin;
 
-import PainelAdmin.PainelAdmin;
-
 import classesObjetos.Jogo;
 import conexaoBD.ConexaoBD;
+
+import PainelAdmin.PainelAdmin;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,14 +16,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ContentPanelAdmin extends JFrame {
-    static JPanel contPanel = new JPanel(new CardLayout());
+public class CadastrarJogosPanel extends JPanel {
+    public JPanel cadastrarJogosPanel = new JPanel(null);
     static Color corPainel = new Color(45, 45, 45);
-    static JPanel cadastrarJogosPanel = new JPanel();
-    static JPanel jogosCadastradosPanel = new JPanel();
     static JButton buttonCadastrar = new JButton("CADASTRAR");
     static JTextField inputIDJogo = new JTextField();
     static JTextField inputTitulo = new JTextField(40);
@@ -37,32 +34,18 @@ public class ContentPanelAdmin extends JFrame {
     public static int tamanho; // armazena o tamanho da imagem (bytes)
     public static byte[] imagemBytes;
 
-
-    public static void configureContentPanel(PainelAdmin admin) {
-        contPanel = admin.getContentPanel();
-        contPanel.setLayout(new CardLayout());
-
-        JPanel panelInicial = new JPanel();
-        panelInicial.setBackground(Color.orange);
-        panelInicial.add(new JLabel("INICIO"));
-
-        contPanel.setBackground(corPainel);
-        contPanel.add(panelInicial, "inicial");
-        contPanel.add(cadastrarJogosPanel, "cadastrarJogos");
-        contPanel.add(jogosCadastradosPanel, "jogosCadastrados");
-
-        panelCadastrarJogos(admin);
-        panelJogosCadastrados(admin);
-
-//        showPanel("inicial");
+    public CadastrarJogosPanel() {
+        setLayout(new BorderLayout());
+        setBorder(new LineBorder(Color.black));
+        configureCadastrarJogosPanel();
     }
 
-    public static void panelCadastrarJogos(PainelAdmin admin) {
+    public void configureCadastrarJogosPanel() {
         cadastrarJogosPanel.setLayout(null);
         cadastrarJogosPanel.setBackground(Color.white);
 
         JLabel label = new JLabel("CADASTRO DE JOGOS");
-        label.setBounds(100, 20, 200, 20);
+        label.setBounds(50, 20, 200, 20);
         cadastrarJogosPanel.add(label);
 
         // label e input IDJogo
@@ -139,7 +122,8 @@ public class ContentPanelAdmin extends JFrame {
             }
         });
 
-
+        cadastrarJogosPanel.setBounds(230, 0, 770, 600);
+        add(cadastrarJogosPanel, BorderLayout.CENTER);
     }
 
     public static void carregarFoto() {
@@ -186,7 +170,6 @@ public class ContentPanelAdmin extends JFrame {
         try {
             ConexaoBD.cadastrarJogo(jogo);
             JOptionPane.showMessageDialog(null, "SUCESSO", "CADASTRO REALIZADO!", JOptionPane.PLAIN_MESSAGE);
-            carregarDadosDB();
         } catch (Exception e) {
             e.getMessage();
             JOptionPane.showMessageDialog(null, "ERRO", "ERRO: " + e.getMessage(), JOptionPane.ERROR_MESSAGE);
@@ -204,47 +187,5 @@ public class ContentPanelAdmin extends JFrame {
         labelImagem.setIcon(null);
     }
 
-    static JTable tabelaJogos;
-    static DefaultTableModel modeloTabela;
-    public static void panelJogosCadastrados(PainelAdmin admin) {
-        jogosCadastradosPanel.setBackground(Color.WHITE);
-        jogosCadastradosPanel.setLayout(null);
 
-        JLabel label1 = new JLabel("JOGOS CADASTRADOS");
-        label1.setBounds(50, 20, 200, 20);
-        jogosCadastradosPanel.add(label1);
-
-        String[] colunas = {"ID", "Preço", "Título", "Gênero", "Descrição" };
-        modeloTabela = new DefaultTableModel(colunas, 0);
-        tabelaJogos = new JTable(modeloTabela);
-
-        JScrollPane scrollPane = new JScrollPane(tabelaJogos);
-        scrollPane.setBounds(20, 60, 600, 400);
-        jogosCadastradosPanel.add(scrollPane);
-
-        carregarDadosDB();
-    }
-
-    public static void carregarDadosDB() {
-        DefaultTableModel model = (DefaultTableModel) tabelaJogos.getModel();
-        ConexaoBD teste = new ConexaoBD();
-
-        for(Jogo j: teste.getJogosCadastrados()) {
-            String preco = String.valueOf(j.getPreco()).replace(".", ",");
-
-            model.addRow(new Object[]{
-                    j.getIdJogo(),
-                    "R$ " + preco,
-                    j.getTitulo(),
-                    j.getGenero(),
-                    j.getDescricao()
-            });
-        }
-    }
-
-    public static void showPanel(String panelName) {
-        CardLayout cl = (CardLayout) (contPanel.getLayout());
-        cl.show(contPanel, panelName);
-    }
 }
-

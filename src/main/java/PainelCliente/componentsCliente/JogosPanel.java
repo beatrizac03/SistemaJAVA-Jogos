@@ -6,11 +6,16 @@ import conexaoBD.ConexaoBD;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JogosPanel extends JPanel {
+    private List<Jogo> jogos;
+    private JLabel labelNomeJogo;
+    private JFrame frameModalCompra = new JFrame("Pagamento - GameHUB");
+    public static List<Jogo> jogosFavoritos = new ArrayList<>();
+
     public JogosPanel() {
         setLayout(new BorderLayout()); // Usando BorderLayout para melhor organização
         JLabel label1 = new JLabel("CATÁLOGO DE JOGOS");
@@ -21,14 +26,13 @@ public class JogosPanel extends JPanel {
     }
 
     public void configurarCardsPanel() {
-        List<Jogo> jogos = ConexaoBD.getJogosCadastrados();
+        jogos = ConexaoBD.getJogosCadastrados();
 
         JPanel cardsPanel = new JPanel(new GridLayout(0, 3, 20, 20));
         cardsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        for (Jogo jogo : jogos) {
-//            JPanel card = new JPanel(new BorderLayout());
-//            card.setPreferredSize(new Dimension(100, 250));
+        for (int i = 0; i < jogos.size(); i++) {
+            Jogo jogo = jogos.get(i);
             JPanel card = new JPanel(new GridBagLayout());
             GridBagConstraints gbc = new GridBagConstraints();
             card.setPreferredSize(new Dimension(150, 350));
@@ -71,6 +75,13 @@ public class JogosPanel extends JPanel {
             ImageIcon scaledHeartIcon = new ImageIcon(imgH);
             heartLabel.setIcon(scaledHeartIcon);
             card.add(heartLabel, gbc);
+            heartLabel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    jogosFavoritos.add(jogo);
+                    System.out.println(jogosFavoritos);
+                }
+            });
 
             gbc.gridx = 1;
             gbc.anchor = GridBagConstraints.CENTER;
@@ -86,20 +97,16 @@ public class JogosPanel extends JPanel {
             gbc.anchor = GridBagConstraints.CENTER;
             JButton btnComprar = new JButton("COMPRAR");
             card.add(btnComprar, gbc);
+            int index = i;
             btnComprar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    comprarJogo();
+                    modalComprarJogo(index);
+                    labelNomeJogo.setText(jogos.get(index).getTitulo().toUpperCase());
                 }
+
             });
 
-//            gbc.gridy++;
-//            JLabel descricaoLabel = new JLabel(jogo.getDescricao());
-//            card.add(descricaoLabel, gbc);
-
-//            card.add(tituloLabel, BorderLayout.CENTER);
-//            card.add(idLabel, BorderLayout.SOUTH);
-//            card.add(imgLabel, BorderLayout.NORTH);
             card.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
             cardsPanel.add(card);
@@ -112,8 +119,58 @@ public class JogosPanel extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    public void comprarJogo() {
-        JOptionPane.showMessageDialog(null, "Compra de jogo realizada com sucesso!", "COMPRA",
-                JOptionPane.PLAIN_MESSAGE);
+    public void modalComprarJogo(int index) {
+        frameModalCompra.setSize(400, 500);
+        frameModalCompra.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        frameModalCompra.setLocationRelativeTo(null);
+        JPanel panelModalCJ = new JPanel();
+        panelModalCJ.setLayout(null);
+        panelModalCJ.setSize(400, 500);
+
+        labelNomeJogo = new JLabel();
+        labelNomeJogo.setText(jogos.get(index).getTitulo().toUpperCase());
+        labelNomeJogo.setBounds(100, 20, 300, 30);
+        labelNomeJogo.setBorder(new LineBorder(Color.black));
+        panelModalCJ.add(labelNomeJogo);
+
+        JLabel labelFormaPag = new JLabel("Escolha a forma de pagamento: ");
+        labelFormaPag.setBounds(50, 100, 300, 30);
+        panelModalCJ.add(labelFormaPag);
+
+        JRadioButton pix, cartaoCredito, cartaoDebito;
+        pix = new JRadioButton("PIX", false);
+        pix.setBounds(50, 140, 200, 25);
+        cartaoCredito = new JRadioButton("Cartão de Crédito", false);
+        cartaoCredito.setBounds(50, 170, 200, 25);
+        cartaoDebito = new JRadioButton("Cartão de Débito", false);
+        cartaoDebito.setBounds(50, 200, 200, 25);
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(pix);
+        group.add(cartaoDebito);
+        group.add(cartaoCredito);
+
+        panelModalCJ.add(pix);
+        panelModalCJ.add(cartaoCredito);
+        panelModalCJ.add(cartaoDebito);
+
+
+        Jogo jogo = jogos.get(index);
+
+
+//        JOptionPane.showMessageDialog(null, "Compra do jogo " + jogo.getTitulo() + " realizada com sucesso!", "COMPRA",
+//                JOptionPane.PLAIN_MESSAGE);
+
+        frameModalCompra.add(panelModalCJ);
+        frameModalCompra.setVisible(true);
+        System.out.println(index);
+        System.out.println(jogos.get(index).getTitulo());
+
+        frameModalCompra.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                labelNomeJogo.setText("");
+            }
+        });
     }
 }
