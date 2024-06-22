@@ -3,7 +3,7 @@ package conexaoBD;
 import java.sql.*;
 import java.util.*;
 
-import classesObjetos.Jogo;
+import classesObjetos.*;
 
 import javax.swing.*;
 
@@ -83,6 +83,25 @@ public class ConexaoBD {
         }
 
         return jogos;
+    }
+
+    public static void cadastrarUsuario(Usuario user) {
+        String insertUser = "INSERT INTO usuario(id_usuario, tipo_usuario, nome_usuario, senha_usuario, foto_usuario)" +
+                " VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = getConnection(); PreparedStatement stm = conn.prepareStatement(insertUser)) {
+            stm.setInt(1, user.getIdUsuario());
+            stm.setString(2, user.getTipoUsuario());
+            stm.setString(3, user.getNomeUsuario());
+            stm.setString(4, user.getSenhaUsuario());
+            stm.setBytes(5, user.getImagemUsuario());
+
+            stm.executeQuery();
+
+        } catch (SQLException e) {
+            e.getStackTrace();
+            e.getMessage();
+        }
     }
      public static void main(String[] args) {
         getConnection();
