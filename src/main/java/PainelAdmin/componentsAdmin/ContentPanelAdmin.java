@@ -3,7 +3,7 @@ package PainelAdmin.componentsAdmin;
 import PainelAdmin.PainelAdmin;
 
 import classesObjetos.Jogo;
-import conexaoBD.TesteBD;
+import conexaoBD.ConexaoBD;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,14 +13,12 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ContentPanelAdmin extends JFrame {
     static JPanel contPanel = new JPanel(new CardLayout());
@@ -186,7 +184,7 @@ public class ContentPanelAdmin extends JFrame {
         arrJogos.add(jogo);
         System.out.println(arrJogos);
         try {
-            TesteBD.cadastrarJogo(jogo);
+            ConexaoBD.cadastrarJogo(jogo);
             JOptionPane.showMessageDialog(null, "SUCESSO", "CADASTRO REALIZADO!", JOptionPane.PLAIN_MESSAGE);
             carregarDadosDB();
         } catch (Exception e) {
@@ -229,12 +227,14 @@ public class ContentPanelAdmin extends JFrame {
 
     public static void carregarDadosDB() {
         DefaultTableModel model = (DefaultTableModel) tabelaJogos.getModel();
-        TesteBD teste = new TesteBD();
+        ConexaoBD teste = new ConexaoBD();
 
         for(Jogo j: teste.getJogosCadastrados()) {
+            String preco = String.valueOf(j.getPreco()).replace(".", ",");
+
             model.addRow(new Object[]{
                     j.getIdJogo(),
-                    j.getPreco(),
+                    "R$ " + preco,
                     j.getTitulo(),
                     j.getGenero(),
                     j.getDescricao()

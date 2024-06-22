@@ -1,4 +1,4 @@
-package PainelCliente.componentsAdmin;
+package PainelCliente.componentsCliente;
 
 import javax.swing.*;
 

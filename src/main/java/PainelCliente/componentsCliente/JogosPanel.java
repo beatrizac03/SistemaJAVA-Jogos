@@ -1,7 +1,7 @@
-package PainelCliente.componentsAdmin;
+package PainelCliente.componentsCliente;
 
 import classesObjetos.Jogo;
-import conexaoBD.TesteBD;
+import conexaoBD.ConexaoBD;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +18,7 @@ public class JogosPanel extends JPanel {
     }
 
     public void configurarCardsPanel() {
-        List<Jogo> jogos = TesteBD.getJogosCadastrados();
+        List<Jogo> jogos = ConexaoBD.getJogosCadastrados();
 
         JPanel cardsPanel = new JPanel(new GridLayout(0, 3, 10, 10));
         cardsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -33,6 +33,7 @@ public class JogosPanel extends JPanel {
 
             card.add(tituloLabel, BorderLayout.CENTER);
             card.add(idLabel, BorderLayout.SOUTH);
+            card.add(imgLabel, BorderLayout.NORTH);
             card.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
             cardsPanel.add(card);

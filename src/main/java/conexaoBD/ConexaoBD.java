@@ -1,16 +1,13 @@
 package conexaoBD;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.sql.*;
 import java.util.*;
 
 import classesObjetos.Jogo;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class TesteBD {
+public class ConexaoBD {
     private static String URL = "jdbc:sqlite:src/main/resources/testando.bd";
     private static String usuario = "root";
     private static String senha = "";
@@ -49,7 +46,7 @@ public class TesteBD {
 
     public static List<Jogo> getJogosCadastrados() {
         List<Jogo> jogos = new ArrayList<>();
-        String selectQuery = "SELECT id_jogo, titulo_jogo, genero_jogo, preco_jogo, descricao_jogo FROM jogos";
+        String selectQuery = "SELECT id_jogo, titulo_jogo, genero_jogo, preco_jogo, descricao_jogo, imagem_jogo FROM jogos";
 
         try (Connection conn = getConnection();
              PreparedStatement stm = conn.prepareStatement(selectQuery);
@@ -71,7 +68,7 @@ public class TesteBD {
                     System.out.println(e);
                 }
 
-                Jogo jogo = new Jogo(idJogo,genero, titulo, preco, descricao, imagem); // Supondo que o construtor de Jogo aceite genero e titulo
+                Jogo jogo = new Jogo(idJogo,genero, titulo, preco, descricao, imagem);
                 jogos.add(jogo);
             }
 

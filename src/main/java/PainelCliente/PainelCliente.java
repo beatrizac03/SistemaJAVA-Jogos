@@ -1,7 +1,7 @@
 package PainelCliente;
 
 import PainelAdmin.FontManager;
-import PainelCliente.componentsAdmin.*;
+import PainelCliente.componentsCliente.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -13,7 +13,7 @@ public class PainelCliente extends JFrame {
     private JPanel mainPanel = new JPanel(null);
     private JPanel sidebarCliente = new JPanel();
     private JPanel contentPanel = new JPanel();
-    public JLabel btnPerfil = new JLabel("MEU PERFIL");
+    public JLabel labelPerfil = new JLabel();
     public JLabel btnJogos = new JLabel("JOGOS");
     public JLabel btnFavoritos = new JLabel("FAVORITOS");
     public JLabel btnPedidos = new JLabel("PEDIDOS");
@@ -39,6 +39,19 @@ public class PainelCliente extends JFrame {
         sidebarCliente.setBackground(Color.BLUE);
 
         mainPanel.add(sidebarCliente);
+
+        labelPerfil.setBounds(50, 20, 35, 35);
+        ImageIcon icon = new ImageIcon("src/main/java/PainelCliente/images/profile-user.png");
+        Image img = icon.getImage().getScaledInstance(labelPerfil.getWidth(), labelPerfil.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(img);
+        labelPerfil.setIcon(scaledIcon);
+        sidebarCliente.add(labelPerfil);
+        labelPerfil.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+        });
 
         btnJogos.setBounds(50, 100, 100, 20);
         btnJogos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
