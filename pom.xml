@@ -78,13 +78,12 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- dependência do FlatLaf, para alterar a barra de título do Frame -->
+        <!-- dependência do FlatLaf, para alterar o estilo do Frame -->
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
             <version>2.1</version>
         </dependency>
-
 
     </dependencies>
 

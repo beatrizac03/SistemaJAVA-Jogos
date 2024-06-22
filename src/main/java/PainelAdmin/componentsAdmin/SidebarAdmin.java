@@ -1,6 +1,7 @@
 package PainelAdmin.componentsAdmin;
 
 import PainelAdmin.PainelAdmin;
+import TelaLogin.TelaLogin;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,5 +51,12 @@ public class SidebarAdmin extends JFrame {
         JLabel label3 = new JLabel("Sair");
         label3.setForeground(Color.RED);
         sidebar.add(label3, gbc);
+        label3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                new TelaLogin();
+
+            }
+        });
     }
 }

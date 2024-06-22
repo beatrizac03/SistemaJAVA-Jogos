@@ -13,12 +13,6 @@ public class PainelAdmin extends JFrame {
     private JPanel contentPanel = new JPanel();
 
     public PainelAdmin() {
-//        FlatLightLaf.setup();
-//
-//        // customizar a cor da barra de título do frame
-//        UIManager.put("TitlePane.background", Color.BLUE);
-//        UIManager.put("TitlePane.foreground", Color.WHITE);
-
         this.setTitle("GameHUB - Portal Admin");
         this.setSize(1000, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

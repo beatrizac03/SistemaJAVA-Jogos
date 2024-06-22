@@ -2,6 +2,8 @@ package PainelCliente;
 
 import PainelAdmin.FontManager;
 import PainelCliente.componentsCliente.*;
+import TelaLogin.TelaLogin;
+import com.formdev.flatlaf.FlatIntelliJLaf;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -34,7 +36,7 @@ public class PainelCliente extends JFrame {
 
     public void configureSidebar() {
         // configurando sidebar
-        sidebarCliente.setBounds(0, 0, 270, this.getHeight());
+        sidebarCliente.setBounds(0, 0, 230, this.getHeight());
         sidebarCliente.setLayout(null);
         sidebarCliente.setBackground(Color.BLUE);
 
@@ -89,7 +91,7 @@ public class PainelCliente extends JFrame {
     public void configurePanels() {
         contentPanel.setLayout(new CardLayout());
         contentPanel.setBorder(new LineBorder(Color.CYAN));
-        contentPanel.setBounds(270, 0, 730, 600);
+        contentPanel.setBounds(230, 0, 770, 600);
 
         contentPanel.add(new HomePanel(), "perfil");
         contentPanel.add(new JogosPanel(), "jogos");
@@ -105,6 +107,11 @@ public class PainelCliente extends JFrame {
     }
 
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(new FlatIntelliJLaf());
+        } catch (Exception e) {
+            e.getMessage();
+        }
         new PainelCliente();
     }
 }

@@ -85,6 +85,30 @@ public class ConexaoBD {
         return jogos;
     }
 
+    public static List<Usuario> autenticarUsuario() {
+        List<Usuario> usuarios = new ArrayList<>();
+        String usuariosQuery = "SELECT nome_usuario, senha_usuario FROM usuarios";
+
+        try(Connection conn = getConnection();
+            PreparedStatement stm = conn.prepareStatement(usuariosQuery);
+            ResultSet rs = stm.executeQuery()){
+
+            while(rs.next()) {
+                String nomeUsuario = rs.getString("nome_usuario");
+                String senhaUsuario = rs.getString("senha_usuario");
+
+
+                Usuario usuario = new Usuario(nomeUsuario, senhaUsuario);
+                usuarios.add(usuario);
+            }
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return usuarios;
+    }
+
     public static void cadastrarUsuario(Usuario user) {
         String insertUser = "INSERT INTO usuario(id_usuario, tipo_usuario, nome_usuario, senha_usuario, foto_usuario)" +
                 " VALUES (?, ?, ?, ?, ?)";

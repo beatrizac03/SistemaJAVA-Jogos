@@ -15,6 +15,11 @@ public class Usuario {
         this.imagemUsuario = imagem;
     }
 
+    public Usuario(String nome, String senha) {
+        this.nomeUsuario = nome;
+        this.senhaUsuario = senha;
+    }
+
     public int getIdUsuario() {
         return idUsuario;
     }
