@@ -1,5 +1,6 @@
 package PainelCliente.componentsCliente;
 
+import classesObjetos.Favoritos;
 import classesObjetos.Jogo;
 import conexaoBD.ConexaoBD;
 
@@ -15,9 +16,10 @@ public class JogosPanel extends JPanel {
     private JLabel labelNomeJogo;
     private JFrame frameModalCompra = new JFrame("Pagamento - GameHUB");
     public static List<Jogo> jogosFavoritos = new ArrayList<>();
+    private FavoritosPanel favoritosPanel = new FavoritosPanel();
 
     public JogosPanel() {
-        setLayout(new BorderLayout()); // Usando BorderLayout para melhor organização
+        setLayout(new BorderLayout());
         JLabel label1 = new JLabel("CATÁLOGO DE JOGOS");
         label1.setHorizontalAlignment(SwingConstants.CENTER); // Centralizando o label
         add(label1, BorderLayout.NORTH);
@@ -32,6 +34,8 @@ public class JogosPanel extends JPanel {
         cardsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         for (int i = 0; i < jogos.size(); i++) {
+            int index = i;
+
             Jogo jogo = jogos.get(i);
             JPanel card = new JPanel(new GridBagLayout());
             GridBagConstraints gbc = new GridBagConstraints();
@@ -75,11 +79,12 @@ public class JogosPanel extends JPanel {
             ImageIcon scaledHeartIcon = new ImageIcon(imgH);
             heartLabel.setIcon(scaledHeartIcon);
             card.add(heartLabel, gbc);
+            heartLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             heartLabel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    jogosFavoritos.add(jogo);
-                    System.out.println(jogosFavoritos);
+                    JOptionPane.showMessageDialog(null, "Jogo adicionado em favoritos!", "GameHUB - Favoritos", JOptionPane.PLAIN_MESSAGE);
+                    Favoritos.adicionarAosFavoritos(jogo);
                 }
             });
 
@@ -97,7 +102,7 @@ public class JogosPanel extends JPanel {
             gbc.anchor = GridBagConstraints.CENTER;
             JButton btnComprar = new JButton("COMPRAR");
             card.add(btnComprar, gbc);
-            int index = i;
+
             btnComprar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -108,7 +113,6 @@ public class JogosPanel extends JPanel {
             });
 
             card.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
             cardsPanel.add(card);
         }
 
@@ -118,6 +122,10 @@ public class JogosPanel extends JPanel {
         scrollPane.setVisible(true);
         add(scrollPane, BorderLayout.CENTER);
     }
+
+//    public void adicionarAosFavoritos(int index){
+//        jogosFavoritos.add(jogos.get(index));
+//    }
 
     public void modalComprarJogo(int index) {
         frameModalCompra.setSize(400, 500);
@@ -153,10 +161,6 @@ public class JogosPanel extends JPanel {
         panelModalCJ.add(pix);
         panelModalCJ.add(cartaoCredito);
         panelModalCJ.add(cartaoDebito);
-
-
-        Jogo jogo = jogos.get(index);
-
 
 //        JOptionPane.showMessageDialog(null, "Compra do jogo " + jogo.getTitulo() + " realizada com sucesso!", "COMPRA",
 //                JOptionPane.PLAIN_MESSAGE);

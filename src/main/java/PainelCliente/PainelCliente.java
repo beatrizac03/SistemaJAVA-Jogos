@@ -1,8 +1,7 @@
 package PainelCliente;
 
-import PainelAdmin.FontManager;
+import fonts.FontManager;
 import PainelCliente.componentsCliente.*;
-import TelaLogin.TelaLogin;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 
 import javax.swing.*;

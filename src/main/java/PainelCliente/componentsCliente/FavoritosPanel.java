@@ -1,40 +1,51 @@
 package PainelCliente.componentsCliente;
 
-import classesObjetos.Jogo;
+import classesObjetos.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.List;
 
-public class FavoritosPanel extends JPanel {
-    public static List<Jogo> jogosFav = JogosPanel.jogosFavoritos;
+public class FavoritosPanel extends JPanel implements Favoritos.FavoritosListener {
+    private JPanel cardsPanel;
+
     public FavoritosPanel() {
-        this.setLayout(null);
-        JLabel label = new JLabel("FAVORITOS");
-        label.setBounds(20, 20, 100, 20);
+        setLayout(new BorderLayout());
+        JLabel labelFav = new JLabel("FAVORITOS");
+        labelFav.setHorizontalAlignment(SwingConstants.CENTER);
+        add(labelFav, BorderLayout.NORTH);
 
-        configureFavoritosPanel();
-        this.add(label);
-    }
-
-    public void configureFavoritosPanel() {
-        JPanel cardsPanel = new JPanel(new GridLayout(0, 3, 20, 20));
+        cardsPanel = new JPanel();
+        cardsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10)); // Ajuste para FlowLayout com alinhamento à esquerda
         cardsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        for(int i = 0; i < jogosFav.size(); i++) {
-            Jogo jogo = jogos.get(i);
+        JScrollPane scrollPane2 = new JScrollPane(cardsPanel);
+        scrollPane2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        add(scrollPane2, BorderLayout.CENTER);
+
+        Favoritos.adicionarListener(this);
+        updateCardsPanel(Favoritos.getJogosFavoritos());
+    }
+
+    public void updateCardsPanel(List<Jogo> favoritos) {
+        cardsPanel.removeAll();
+
+        for (int i = 0; i < favoritos.size(); i++) {
+            Jogo jogo = favoritos.get(i);
             JPanel card = new JPanel(new GridBagLayout());
+            card.setPreferredSize(new Dimension(180, 280));
+            card.setMaximumSize(new Dimension(180, 280));
+            card.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
             GridBagConstraints gbc = new GridBagConstraints();
-            card.setPreferredSize(new Dimension(150, 350));
             gbc.gridx = 0;
             gbc.gridy = 0;
-            gbc.gridwidth = 3;
+            gbc.gridwidth = 1;
             gbc.anchor = GridBagConstraints.CENTER;
 
             JLabel imgLabel = new JLabel();
-            imgLabel.setPreferredSize(new Dimension(150, 200));
-            imgLabel.setBorder(new LineBorder(Color.red));
             ImageIcon icon = new ImageIcon(jogo.getImagem());
             Image img = icon.getImage().getScaledInstance(150, 200, Image.SCALE_SMOOTH);
             ImageIcon scaledIcon = new ImageIcon(img);
@@ -42,20 +53,29 @@ public class FavoritosPanel extends JPanel {
             card.add(imgLabel, gbc);
 
             gbc.gridy++;
-            gbc.gridwidth = 3;
-            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.anchor = GridBagConstraints.WEST;
 
             JLabel idLabel = new JLabel("ID: " + jogo.getIdJogo());
             card.add(idLabel, gbc);
 
             gbc.gridy++;
             JLabel tituloLabel = new JLabel(jogo.getTitulo());
+            tituloLabel.setFont(new Font("Arial", Font.BOLD, 14));
             card.add(tituloLabel, gbc);
 
             gbc.gridy++;
             JLabel generoLabel = new JLabel("Gênero: " + jogo.getGenero());
             card.add(generoLabel, gbc);
+
+            cardsPanel.add(card);
         }
 
+        revalidate();
+        repaint();
+    }
+
+    @Override
+    public void favoritosAtualizados(List<Jogo> favoritos) {
+        updateCardsPanel(favoritos);
     }
 }

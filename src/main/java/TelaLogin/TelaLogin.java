@@ -57,7 +57,7 @@ public class TelaLogin extends JFrame {
 
         // Definindo posições e tamanhos dos componentes
 
-        ImageIcon icon = new ImageIcon("gameHUB.png");
+        ImageIcon icon = new ImageIcon("src/main/java/TelaLogin/images/capa.png");
         JLabel imagemLabel = new JLabel(icon);
         imagemLabel.setBounds(0, 0, 500, 600);
         imagemLabel.setBorder(new LineBorder(Color.BLACK));
@@ -108,9 +108,9 @@ public class TelaLogin extends JFrame {
         for (Usuario user : users) {
             if (user.getNomeUsuario().equals(username) && user.getSenhaUsuario().equals(password)) {
                 loginSuccess = true;
-                if (username.equals("admin2024") && password.equals("senha.admin")) {
+                if (username.equals("admin2024") && password.equals("senha.2024")) {
                     new PainelAdmin();
-                } else if (username.equals("cliente2024") && password.equals("senha.cliente") ) {
+                } else if (username.equals("cliente2024") && password.equals("senha.2024") ) {
                     new PainelCliente();
                 }
                 this.dispose();

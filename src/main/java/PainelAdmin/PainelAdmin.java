@@ -1,11 +1,9 @@
 package PainelAdmin;
 
-import PainelAdmin.componentsAdmin.*;
 import com.formdev.flatlaf.FlatIntelliJLaf;
-//import PainelAdmin.componentsAdmin.ContentPanelAdmin;
-//import PainelAdmin.componentsAdmin.SidebarAdmin;
 import PainelAdmin.componentsAdmin.CadastrarJogosPanel;
 import PainelAdmin.componentsAdmin.JogosCadastradosPanel;
+import fonts.FontManager;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -29,7 +27,7 @@ public class PainelAdmin extends JFrame {
         this.setLocationRelativeTo(null);
         mainPanel.setSize(1000, 600);
         FontManager.manageFont();
-//        configurePanels();
+
         configureSidebar();
         configureContentPanel();
         this.setVisible(true);

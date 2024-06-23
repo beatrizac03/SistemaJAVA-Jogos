@@ -68,7 +68,7 @@ public class ConexaoBD {
                     System.out.println(e);
                 }
 
-                Jogo jogo = new Jogo(idJogo,genero, titulo, preco, descricao, imagem);
+                Jogo jogo = new Jogo(idJogo,titulo, genero, preco, descricao, imagem);
                 jogos.add(jogo);
             }
 
@@ -83,6 +83,36 @@ public class ConexaoBD {
         }
 
         return jogos;
+    }
+
+    public static List<Jogo> getJogosFavoritos() {
+        List<Jogo> jogosFavoritos = new ArrayList<>();
+        String query = "SELECT j.id_jogo, j.titulo_jogo, j.genero_jogo, j.preco_jogo, j.descricao_jogo, j.imagem_jogo " +
+                "FROM jogos_favoritos jf " +
+                "JOIN jogos j ON jf.id_jogo = j.id_jogo " +
+                "WHERE jf.id_usuario = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stm = conn.prepareStatement(query)) {
+
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    int idJogo = rs.getInt("id_jogo");
+                    String titulo = rs.getString("titulo_jogo");
+                    String genero = rs.getString("genero_jogo");
+                    double preco = rs.getDouble("preco_jogo");
+                    String descricao = rs.getString("descricao_jogo");
+                    byte[] imagem = rs.getBytes("imagem_jogo");
+
+                    Jogo jogo = new Jogo(idJogo, titulo, genero, preco, descricao, imagem);
+                    jogosFavoritos.add(jogo);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return jogosFavoritos;
     }
 
     public static List<Usuario> autenticarUsuario() {
