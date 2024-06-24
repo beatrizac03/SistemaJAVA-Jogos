@@ -1,5 +1,6 @@
 package PainelCliente;
 
+import TelaLogin.TelaLogin;
 import fonts.FontManager;
 import PainelCliente.componentsCliente.*;
 import com.formdev.flatlaf.FlatIntelliJLaf;
@@ -85,12 +86,23 @@ public class PainelCliente extends JFrame {
             }
         });
 
+        btnSair.setBounds(50, 500, 100, 20);
+        btnSair.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        sidebarCliente.add(btnSair);
+        btnSair.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                new TelaLogin();
+            }
+        });
+
         this.add(mainPanel);
     }
 
     public void configurePanels() {
         contentPanel.setLayout(new CardLayout());
-        contentPanel.setBorder(new LineBorder(Color.CYAN));
+        contentPanel.setBorder(new LineBorder(Cores.getBlackL()));
         contentPanel.setBounds(230, 0, 770, 600);
 
         contentPanel.add(new HomePanel(), "perfil");

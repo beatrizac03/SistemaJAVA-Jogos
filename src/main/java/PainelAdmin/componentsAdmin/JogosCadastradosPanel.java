@@ -60,4 +60,10 @@ public class JogosCadastradosPanel extends JPanel {
         }
     }
 
+    public static void atualizarTabela() {
+        DefaultTableModel model = (DefaultTableModel) tabelaJogos.getModel();
+        model.setRowCount(0); // limpa a tabela antes de recarregar os dados
+        carregarDadosDB();
+    }
+
 }

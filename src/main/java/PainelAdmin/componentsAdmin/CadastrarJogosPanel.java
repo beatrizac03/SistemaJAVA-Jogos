@@ -87,7 +87,7 @@ public class CadastrarJogosPanel extends JPanel {
 
         JScrollPane scrollPaneDescricao = new JScrollPane(inputDescricao);
         inputDescricao.setLineWrap(true);
-        scrollPaneDescricao.setBounds(50, 385, 280, 100);
+        scrollPaneDescricao.setBounds(50, 395, 280, 100);
         cadastrarJogosPanel.add(scrollPaneDescricao);
 
         // LABEL, BOTAO DE SELECIONAR IMAGEM
@@ -114,6 +114,7 @@ public class CadastrarJogosPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     cadastrarJogoBtn();
+                    JogosCadastradosPanel.atualizarTabela();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 } catch (SQLException ex) {

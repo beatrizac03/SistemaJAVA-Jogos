@@ -80,6 +80,7 @@ public class PainelAdmin extends JFrame {
         labelSair.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                dispose();
                 new TelaLogin();
             }
         });

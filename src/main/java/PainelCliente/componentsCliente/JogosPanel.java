@@ -3,6 +3,7 @@ package PainelCliente.componentsCliente;
 import classesObjetos.Favoritos;
 import classesObjetos.Jogo;
 import conexaoBD.ConexaoBD;
+import paletaDeCores.Cores;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -40,6 +41,7 @@ public class JogosPanel extends JPanel {
             JPanel card = new JPanel(new GridBagLayout());
             GridBagConstraints gbc = new GridBagConstraints();
             card.setPreferredSize(new Dimension(150, 350));
+            card.setBackground(Cores.getOrangeS());
             gbc.gridx = 0;
             gbc.gridy = 0;
             gbc.gridwidth = 3;
@@ -112,7 +114,7 @@ public class JogosPanel extends JPanel {
 
             });
 
-            card.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//            card.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             cardsPanel.add(card);
         }
 
@@ -138,7 +140,7 @@ public class JogosPanel extends JPanel {
         labelNomeJogo = new JLabel();
         labelNomeJogo.setText(jogos.get(index).getTitulo().toUpperCase());
         labelNomeJogo.setBounds(100, 20, 300, 30);
-        labelNomeJogo.setBorder(new LineBorder(Color.black));
+//        labelNomeJogo.setBorder(new LineBorder(Color.black));
         panelModalCJ.add(labelNomeJogo);
 
         JLabel labelFormaPag = new JLabel("Escolha a forma de pagamento: ");
@@ -160,10 +162,17 @@ public class JogosPanel extends JPanel {
 
         panelModalCJ.add(pix);
         panelModalCJ.add(cartaoCredito);
-        panelModalCJ.add(cartaoDebito);
 
-//        JOptionPane.showMessageDialog(null, "Compra do jogo " + jogo.getTitulo() + " realizada com sucesso!", "COMPRA",
-//                JOptionPane.PLAIN_MESSAGE);
+
+        JButton btnEfetuarCompra = new JButton("COMPRAR");
+        btnEfetuarCompra.setBounds(100, 260, 100, 25);
+        panelModalCJ.add(btnEfetuarCompra);
+        btnEfetuarCompra.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                efetuarCompra();
+            }
+        });
 
         frameModalCompra.add(panelModalCJ);
         frameModalCompra.setVisible(true);
@@ -176,5 +185,10 @@ public class JogosPanel extends JPanel {
                 labelNomeJogo.setText("");
             }
         });
+    }
+
+    public void efetuarCompra() {
+                JOptionPane.showMessageDialog(null, "Compra realizada com sucesso!", "COMPRA",
+                JOptionPane.PLAIN_MESSAGE);
     }
 }
