@@ -16,8 +16,7 @@ Logins para teste:
 ## Preview GUI
 
 
-https://github.com/beatrizac03/Trabalho-Final-de-LP-POO/assets/134962161/96ace50a-d13e-4641-a25e-d56528877590
-
+https://github.com/beatrizac03/Trabalho-Final-de-LP-POO/assets/134962161/34dbc9a0-505e-45da-8434-fb730a15619a
 
 
 
