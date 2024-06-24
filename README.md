@@ -1,5 +1,9 @@
 # GameHUB - Plataforma de Jogos em Java
 Projeto desenvolvido em Java, utilizando a biblioteca Swing para a interface gráfica. O sistema permite que o administrador cadastre e gerencie jogos, enquanto o cliente pode visualizar o catálogo e efetuar compras.
+
+
+Prototipação: <a href="https://www.figma.com/design/RObLbErhhGqPyjLGwAADSx/Trabalho?node-id=0-1&t=V8yeD6PXWx0ub1HC-1">Design Figma</a>
+
 <div >
 <img src="https://github.com/beatrizac03/Trabalho-Final-de-LP-POO/blob/main/arquivosREADME/CapaGithub.png" >
 </div>
