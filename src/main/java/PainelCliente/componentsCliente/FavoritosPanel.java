@@ -1,6 +1,7 @@
 package PainelCliente.componentsCliente;
 
 import classesObjetos.*;
+import paletaDeCores.Cores;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -38,6 +39,7 @@ public class FavoritosPanel extends JPanel implements Favoritos.FavoritosListene
             card.setPreferredSize(new Dimension(180, 280));
             card.setMaximumSize(new Dimension(180, 280));
             card.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            card.setBackground(Cores.getOrangeS());
 
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = 0;
