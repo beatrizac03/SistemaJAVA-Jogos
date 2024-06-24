@@ -3,6 +3,7 @@ package PainelCliente;
 import fonts.FontManager;
 import PainelCliente.componentsCliente.*;
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import paletaDeCores.Cores;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -37,7 +38,7 @@ public class PainelCliente extends JFrame {
         // configurando sidebar
         sidebarCliente.setBounds(0, 0, 230, this.getHeight());
         sidebarCliente.setLayout(null);
-        sidebarCliente.setBackground(Color.BLUE);
+        sidebarCliente.setBackground(Cores.getPurpleS());
 
         mainPanel.add(sidebarCliente);
 

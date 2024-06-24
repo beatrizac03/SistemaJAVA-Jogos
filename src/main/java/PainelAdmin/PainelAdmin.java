@@ -1,9 +1,11 @@
 package PainelAdmin;
 
+import TelaLogin.TelaLogin;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import PainelAdmin.componentsAdmin.CadastrarJogosPanel;
 import PainelAdmin.componentsAdmin.JogosCadastradosPanel;
 import fonts.FontManager;
+import paletaDeCores.Cores;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -36,7 +38,7 @@ public class PainelAdmin extends JFrame {
     public void configureSidebar() {
         sidebar.setBounds(0, 0, 230, this.getHeight());
         sidebar.setLayout(null);
-        sidebar.setBackground(Color.BLUE);
+        sidebar.setBackground(Cores.getOrangeS());
         mainPanel.add(sidebar);
 
         labelPerfil.setBounds(50, 20, 35, 35);
@@ -75,13 +77,19 @@ public class PainelAdmin extends JFrame {
         labelSair.setBounds(50, 500, 100, 20);
         labelSair.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         sidebar.add(labelSair);
+        labelSair.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                new TelaLogin();
+            }
+        });
 
         this.add(mainPanel);
     }
 
     public void configureContentPanel() {
         contentPanel.setLayout(new CardLayout());
-        contentPanel.setBorder(new LineBorder(Color.cyan));
+//        contentPanel.setBorder(new LineBorder(Color.cyan));
         contentPanel.setBounds(230, 0, 770, 600);
 
         contentPanel.add(new CadastrarJogosPanel(), "cadastrarJogos");
