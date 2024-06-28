@@ -5,6 +5,9 @@ import conexaoBD.ConexaoBD;
 
 import PainelAdmin.PainelAdmin;
 
+import paletaDeCores.Cores;
+import tipografia.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -42,10 +45,12 @@ public class CadastrarJogosPanel extends JPanel {
 
     public void configureCadastrarJogosPanel() {
         cadastrarJogosPanel.setLayout(null);
-        cadastrarJogosPanel.setBackground(Color.white);
+        cadastrarJogosPanel.setBackground(Cores.getBlackL());
 
         JLabel label = new JLabel("CADASTRO DE JOGOS");
-        label.setBounds(50, 20, 200, 20);
+        label.setBounds(50, 20, 280, 20);
+        Font fontLabel20 = FontManager.getFontPoppinsMedium(20f);
+        label.setFont(fontLabel20);
         cadastrarJogosPanel.add(label);
 
         // label e input IDJogo

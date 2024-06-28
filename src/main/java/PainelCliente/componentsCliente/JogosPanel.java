@@ -4,6 +4,7 @@ import classesObjetos.Favoritos;
 import classesObjetos.Jogo;
 import conexaoBD.ConexaoBD;
 import paletaDeCores.Cores;
+import tipografia.FontManager;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -11,6 +12,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * JogosPanel: mostrará todos os jogos cadastrados pelo Admin
+ */
 
 public class JogosPanel extends JPanel {
     private List<Jogo> jogos;
@@ -20,9 +25,13 @@ public class JogosPanel extends JPanel {
     private FavoritosPanel favoritosPanel = new FavoritosPanel();
 
     public JogosPanel() {
+        setBackground(Cores.getBlackL());
         setLayout(new BorderLayout());
         JLabel label1 = new JLabel("CATÁLOGO DE JOGOS");
-        label1.setHorizontalAlignment(SwingConstants.CENTER); // Centralizando o label
+        label1.setHorizontalAlignment(SwingConstants.LEFT);
+        Font font20 = FontManager.getFontPoppinsMedium(20f);
+        label1.setFont(font20);
+        label1.setForeground(Cores.getPurpleS());
         add(label1, BorderLayout.NORTH);
 
         configurarCardsPanel();
@@ -33,6 +42,7 @@ public class JogosPanel extends JPanel {
 
         JPanel cardsPanel = new JPanel(new GridLayout(0, 3, 20, 20));
         cardsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        cardsPanel.setBackground(Cores.getBlackL());
 
         for (int i = 0; i < jogos.size(); i++) {
             int index = i;
@@ -40,8 +50,8 @@ public class JogosPanel extends JPanel {
             Jogo jogo = jogos.get(i);
             JPanel card = new JPanel(new GridBagLayout());
             GridBagConstraints gbc = new GridBagConstraints();
-            card.setPreferredSize(new Dimension(150, 350));
-            card.setBackground(Cores.getOrangeS());
+            card.setPreferredSize(new Dimension(130, 320));
+            card.setBackground(Cores.getGreyL());
             gbc.gridx = 0;
             gbc.gridy = 0;
             gbc.gridwidth = 3;
@@ -60,9 +70,8 @@ public class JogosPanel extends JPanel {
             gbc.gridwidth = 3;
             gbc.anchor = GridBagConstraints.CENTER;
 
-            JLabel idLabel = new JLabel("ID: " + jogo.getIdJogo());
-            card.add(idLabel, gbc);
-
+//            JLabel idLabel = new JLabel("ID: " + jogo.getIdJogo());
+//            card.add(idLabel, gbc);
             gbc.gridy++;
             JLabel tituloLabel = new JLabel(jogo.getTitulo());
             card.add(tituloLabel, gbc);
@@ -120,7 +129,7 @@ public class JogosPanel extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(cardsPanel);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setVisible(true);
         add(scrollPane, BorderLayout.CENTER);
     }
@@ -191,4 +200,5 @@ public class JogosPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "Compra realizada com sucesso!", "COMPRA",
                 JOptionPane.PLAIN_MESSAGE);
     }
+
 }

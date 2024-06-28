@@ -3,12 +3,14 @@ package TelaLogin;
 import PainelAdmin.PainelAdmin;
 import PainelCliente.PainelCliente;
 import classesObjetos.Usuario;
-import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import conexaoBD.ConexaoBD;
+import paletaDeCores.Cores;
+import tipografia.FontManager;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,6 +37,8 @@ public class TelaLogin extends JFrame {
         setLocationRelativeTo(null);
         setLayout(null);
 
+        FontManager.manageFont();
+
         inicializarComponentes();
         adicionarComponentes();
 
@@ -55,23 +59,24 @@ public class TelaLogin extends JFrame {
         panel.setLayout(null);
         panel.setSize(1000, 600);
 
-        // Definindo posições e tamanhos dos componentes
-
         ImageIcon icon = new ImageIcon("src/main/java/TelaLogin/images/capa.png");
         JLabel imagemLabel = new JLabel(icon);
         imagemLabel.setBounds(0, 0, 500, 600);
         imagemLabel.setBorder(new LineBorder(Color.BLACK));
         imagemLabel.setIcon(icon);
 
-        labelUsuario.setBounds(600, 150, 80, 25);
-        campoUsuario.setBounds(600, 190, 250, 25);
-        labelSenha.setBounds(600, 235, 80, 25);
-        campoSenha.setBounds(600, 275, 250, 25);
-        botaoLogin.setBounds(600, 330, 80, 25);
-        btnCadastrar.setBounds(690, 330, 120, 25);
+        labelUsuario.setBounds(560, 150, 80, 25);
+        campoUsuario.setBounds(560, 185, 340, 30);
+        labelSenha.setBounds(560, 235, 80, 25);
+        campoSenha.setBounds(560, 270, 340, 30);
+        botaoLogin.setBounds(560, 350, 130, 35);
+        btnCadastrar.setBounds(700, 350, 200, 35);
         mensagem.setBounds(200, 300, 300, 25);
 
-        // Adicionando componentes ao frame
+        Font poppinsMedium16 = FontManager.getFontPoppinsMedium(16f);
+        labelUsuario.setFont(poppinsMedium16);
+        labelSenha.setFont(poppinsMedium16);
+
         panel.add(imagemLabel);
         panel.add(labelUsuario);
         panel.add(campoUsuario);
@@ -80,6 +85,8 @@ public class TelaLogin extends JFrame {
         panel.add(botaoLogin);
         panel.add(btnCadastrar);
 
+        botaoLogin.setBackground(Cores.getPurpleS());
+        botaoLogin.setForeground(Color.white);
         botaoLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -124,9 +131,8 @@ public class TelaLogin extends JFrame {
     }
     public JFrame frame2 = new JFrame("CADASTRO - GameHUB");
     public void modalCadastro() {
-
         frame2.setSize(500, 350);
-        frame2.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame2.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame2.setLocationRelativeTo(null);
         JPanel modal = new JPanel();
         modal.setLayout(null);

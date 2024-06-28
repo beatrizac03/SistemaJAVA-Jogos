@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 
 import classesObjetos.Jogo;
 import conexaoBD.ConexaoBD;
+import paletaDeCores.Cores;
 
 public class JogosCadastradosPanel extends JPanel {
     public JPanel jogosCadastradosPanel = new JPanel();
@@ -24,7 +25,7 @@ public class JogosCadastradosPanel extends JPanel {
     }
 
     public void configureCadastrarJogosPanel() {
-        jogosCadastradosPanel.setBackground(Color.WHITE);
+        jogosCadastradosPanel.setBackground(Cores.getBlackL());
         jogosCadastradosPanel.setLayout(null);
 
         JLabel label1 = new JLabel("JOGOS CADASTRADOS");

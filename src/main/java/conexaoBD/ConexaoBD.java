@@ -76,11 +76,11 @@ public class ConexaoBD {
             e.printStackTrace();
         }
 
-        System.out.println("Jogos recuperados do banco de dados: " + jogos.size());
-        for (Jogo jogo : jogos) {
-            System.out.println("ID: " + jogo.getIdJogo() + ", Título: " + jogo.getTitulo() + ", Genero: " + jogo.getGenero() +
-                    ", Preço: " + jogo.getPreco() + ", Descrição: " + jogo.getDescricao());
-        }
+//        System.out.println("Jogos recuperados do banco de dados: " + jogos.size());
+//        for (Jogo jogo : jogos) {
+//            System.out.println("ID: " + jogo.getIdJogo() + ", Título: " + jogo.getTitulo() + ", Genero: " + jogo.getGenero() +
+//                    ", Preço: " + jogo.getPreco() + ", Descrição: " + jogo.getDescricao());
+//        }
 
         return jogos;
     }

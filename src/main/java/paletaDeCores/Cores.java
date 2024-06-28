@@ -10,6 +10,16 @@ public class Cores {
     static Color purpleS = new Color(71, 51, 196);
     static Color orangeS = new Color(255, 124, 67);
 
+    public static Color getGreyL() {
+        return greyL;
+    }
+
+    public static void setGreyL(Color greyL) {
+        Cores.greyL = greyL;
+    }
+
+    static Color greyL = new Color(217, 217, 217);
+
     public static Color getBlackS() {
         return blackS;
     }

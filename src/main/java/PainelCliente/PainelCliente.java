@@ -1,7 +1,7 @@
 package PainelCliente;
 
 import TelaLogin.TelaLogin;
-import fonts.FontManager;
+import tipografia.FontManager;
 import PainelCliente.componentsCliente.*;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import paletaDeCores.Cores;
@@ -12,6 +12,14 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Classe PainelCliente: representa e inicializa o conteúdo base para o portal do cliente
+ * mainPanel = contém dois outros painéis, sidebarCliente e contentPanel
+ * sidebarCliente = possui as labels de clique (labelPerfil, btnJogos, btnFavoritos, btnMeusJogos)
+ * ContentPanel = configurado com CardLayout, seu conteúdo muda de acordo com a label clicada. Podendo abrir três outros
+ * painéis, JogosPanel, FavoritosPanel, MeuPerfil ou MeusJogos, que estão separados em classes próprias, dentro de componentsCliente
+ */
+
 public class PainelCliente extends JFrame {
     private JPanel mainPanel = new JPanel(null);
     private JPanel sidebarCliente = new JPanel();
@@ -19,7 +27,7 @@ public class PainelCliente extends JFrame {
     public JLabel labelPerfil = new JLabel();
     public JLabel btnJogos = new JLabel("JOGOS");
     public JLabel btnFavoritos = new JLabel("FAVORITOS");
-    public JLabel btnPedidos = new JLabel("PEDIDOS");
+    public JLabel btnMeusJogos = new JLabel("MEUS JOGOS");
     public JLabel btnSair = new JLabel("Sair");
 
     public PainelCliente() {
@@ -76,13 +84,13 @@ public class PainelCliente extends JFrame {
             }
         });
 
-        btnPedidos.setBounds(50, 180, 100, 20);
-        btnPedidos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        sidebarCliente.add(btnPedidos);
-        btnPedidos.addMouseListener(new MouseAdapter() {
+        btnMeusJogos.setBounds(50, 180, 100, 20);
+        btnMeusJogos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        sidebarCliente.add(btnMeusJogos);
+        btnMeusJogos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                showCard("pedidos");
+                showCard("meusJogos");
             }
         });
 
@@ -105,10 +113,10 @@ public class PainelCliente extends JFrame {
         contentPanel.setBorder(new LineBorder(Cores.getBlackL()));
         contentPanel.setBounds(230, 0, 770, 600);
 
-        contentPanel.add(new HomePanel(), "perfil");
+        contentPanel.add(new MeuPerfil(), "perfil");
         contentPanel.add(new JogosPanel(), "jogos");
         contentPanel.add(new FavoritosPanel(), "favoritos");
-        contentPanel.add(new PedidosPanel(), "pedidos");
+        contentPanel.add(new MeusJogos(), "meusJogos");
 
         mainPanel.add(contentPanel);
     }
